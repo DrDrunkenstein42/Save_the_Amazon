@@ -1,0 +1,41 @@
+body {
+    height: 300 px;
+    width: 1000 px;
+}
+
+.container {
+    background-color: darkorange;
+    color: darkred;
+    font: Arial;
+    border: black;
+    border-width: 5px;
+    width: 290 px;
+    height: 140 px;
+    margin-left: 5px;
+}
+
+.values {
+    background-color: deepskyblue;
+    color:darkred;
+    border:wheat;
+    border-width: 2px;
+    width: 50px;
+    height: 130px;
+    margin-right: 10px;
+}
+
+#AirCont {
+    margin-top: 5px;
+}
+
+#WaterCont {
+    margin-bottom: 5px;
+}
+
+#Air {
+    margin-top: 10px;
+}
+
+#Water {
+    margin-bottom: 10px;
+}
