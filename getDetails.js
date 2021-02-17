@@ -9,10 +9,17 @@ if (x.includes("book")) {
   category = "electronics";
 }
 
+if (category === "") {
+  x = document.getElementById("nav-subnav");
+  if (x.dataset.category === "apparel") {
+    category = "clothing";
+  }
+}
+
 // get product weight and country of origin
 var weight = 0;
 var origin = "";
-if (category === "books") {
+if (category === "books" || category === "clothing") {
   var details = document.getElementsByClass("a-unordered-list a-nostyle a-vertical a-spacing-none detail-bullet-list");
   for (var i=0; i<details.children.length; i++) {
     if (details.children[i].children[0].children[0].innerHTML.toLowerCase().includes("weight")) {
