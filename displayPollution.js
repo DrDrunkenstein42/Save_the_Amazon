@@ -1,7 +1,43 @@
-var calculatePollution = function (weight, origin, dest) {
+import codes from "./pincodes";
+import countries from "./countries"
 
+const WATER_LAMBDA = 1;
+
+function calculatePollution(weight, origin, dest) {
+  const carbonShipping = 0;
+  const waterShipping = 0;
+
+  const indiaLat = countries["india"].latitude;
+  const indiaLng = countries["india"].longitude;
+  if (origin === "india") {
+    const endLat = codes[dest].lat;
+    const endLng = codes[dest].lng;
+    const distance = latLngDistance(indiaLat, indiaLng, endLat, endLng);
+  } else {
+    const originLat = countries[origin].latitude;
+    const originLng = countries[origin].longitude;
+    const water_dist = latLngDistance(originLat, originLng, indiaLat, indiaLng) * WATER_LAMBDA;
+  }
+}
+
+function toRad(x) {
+  return x * 0.0174532925199433;
+}
+
+function latLngDistance(startLat, startLng, endLat, endLng) {
+  const KM_RATIO = 6371;
+
+  const deltaLat = toRad(endLat - startLat);
+  const deltaLng = toRad(endLng - startLng);
+  const lat1Rad = toRad(startLat);
+  const lat2Rad = toRad(endLat);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1Rad) * Math.cos(lat2Rad);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return c * KM_RATIO;
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    
+
 })

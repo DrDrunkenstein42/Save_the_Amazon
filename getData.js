@@ -20,28 +20,25 @@ function extractPincode(address) {
   if (address.length < 6) {
     return null;
   }
-
   for (var i=0; i<address.length-6; i++) {
     if (/^\d+$/.test(address.substring(i, i+6))) {
       return address.substring(i, i+6);
     }
   }
-
   return null;
 }
 
-// get product weight and pincode
+// get product weight and origin
 var weight = 0;
-var pincode = 0;
+var origin = "";
 
 if (category === "books" || category === "clothing") {
   var details = document.getElementsByClassName("a-unordered-list a-nostyle a-vertical a-spacing-none detail-bullet-list")[0];
   for (var i=0; i<details.children.length; i++) {
     if (details.children[i].children[0].children[0].innerHTML.toLowerCase().includes("weight")) {
       weight = details.children[i].children[0].children[1].innerHTML;
-    } else if (details.children[i].children[0].children[0].innerHTML.toLowerCase().includes("manufacturer")) {
-      pincode = details.children[i].children[0].children[1].innerHTML;
-      pincode = extractPincode(pincode);
+    } else if (details.children[i].children[0].children[0].innerHTML.toLowerCase().includes("origin")) {
+      origin = details.children[i].children[0].children[1].innerHTML;
     }
   }
 } else {
@@ -69,6 +66,6 @@ if (weight.includes("Kilograms")) {
 chrome.runtime.sendMessage({
   "category": category,
   "weight": weight,
-  "manufacturer": pincode,
+  "origin": origin,
   "address": address
 })
