@@ -1,20 +1,21 @@
 import codes from "./pincodes";
 import countries from "./countries"
 
-const WATER_LAMBDA = 1;
+const waterDistanceConst = 1;
 
-function calculatePollution(weight, origin, dest, manufacturer=null) {
+function calculateShippingPollution(weight, origin, dest, manufacturer=null) {
   const carbonShipping = 0;
   const waterShipping = 0;
 
   const indiaLat = countries["india"].latitude;
   const indiaLng = countries["india"].longitude;
-  const distance = 0;
+  const distance = 0; // in km
   if (origin === "india") {
     if (manufacturer === null) { // country of origin is india, but we dont have manufacturer pincode
       const endLat = codes[dest].lat;
       const endLng = codes[dest].lng;
       distance = latLngDistance(indiaLat, indiaLng, endLat, endLng);
+      carbonShipping = distance * 550; // gramms of carbon emission per kilometer
     } else { // we have manufacturer pincode in India
       const startLat = codes[manufacturer].lat;
       const startLng = codes[manufacturer].lng;
@@ -25,8 +26,13 @@ function calculatePollution(weight, origin, dest, manufacturer=null) {
   } else {
     const originLat = countries[origin].latitude;
     const originLng = countries[origin].longitude;
-    const water_dist = latLngDistance(originLat, originLng, indiaLat, indiaLng) * WATER_LAMBDA;
+    const water_dist = latLngDistance(originLat, originLng, indiaLat, indiaLng) * waterDistanceConst;
   }
+  return [carbonShipping, waterShipping];
+}
+
+function calculatePollution(weight, origin, dest, manufacturer=null) {
+
 }
 
 function toRad(x) {
@@ -41,8 +47,8 @@ function latLngDistance(startLat, startLng, endLat, endLng) {
   const lat1Rad = toRad(startLat);
   const lat2Rad = toRad(endLat);
   const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1Rad) * Math.cos(lat2Rad);
+    Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+    Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2) * Math.cos(lat1Rad) * Math.cos(lat2Rad);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return c * KM_RATIO;
 }
