@@ -141,7 +141,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     var category = request["category'];
     var weight = request["weight"];
     var origin = request["manufacturer"];
-    var material = request["material"];
+    var material = request["materials"][0]; // might not work - still have to test
     window.airPollution = calculateAirPollution(category, weight, origin, material);
     window.waterPollution = calculateWaterPollution(category, weight, origin, material);
     if ((request["category"] === "furniture" && request["material"] === "wood") || request["category"] === "books") {
