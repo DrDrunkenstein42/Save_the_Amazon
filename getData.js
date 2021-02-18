@@ -69,6 +69,6 @@ if (weight.includes("Kilograms")) {
 chrome.runtime.sendMessage({
   "category": category,
   "weight": weight,
-  "pincode": pincode,
+  "manufacturer": pincode,
   "address": address
 })
