@@ -28,6 +28,26 @@ function extractPincode(address) {
   return null;
 }
 
+// get product materials in case of furniture or clothing
+const furnitureMats = ["wood", "plastic"];
+const clothMats = ["cotton", "polyester", "leather", "silk", "wool", "denim"];
+
+var matsUsed = [];
+var info = document.getElementsByClassName("a-unordered-list a-vertical a-spacing-mini")[0];
+if (category === "clothing") {
+  for (var i=0; i<clothMats.length; i++) {
+    if (info.innerHTML.includes(clothMats[i])) {
+      matsUsed.push(clothMats[i]);
+    }
+  }
+} else {
+  for (var i=0; i<furnitureMats.length; i++) {
+    if (info.innerHTML.includes(furnitureMats[i])) {
+      matsUsed.append(clothMats[i]);
+    }
+  }
+}
+
 // get product weight, country of origin. get pincode of  manufacturer if in India
 var weight = 0;
 var origin = "";
@@ -73,5 +93,6 @@ chrome.runtime.sendMessage({
   "weight": weight,
   "origin": origin,
   "manufacturer": manufacturer,
-  "address": address
+  "address": address,
+  "materials": matsUsed
 })
