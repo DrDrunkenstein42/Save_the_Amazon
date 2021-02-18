@@ -1,7 +1,7 @@
 import codes from "./pincodes";
 import countries from "./countries"
 
-const waterDistanceConst = 1;
+const waterDistanceConst = 2;
 
 function calculateShippingPollution(weight, origin, dest, manufacturer=null) {
   const carbonShipping = 0;

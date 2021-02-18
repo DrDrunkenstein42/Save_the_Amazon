@@ -40,7 +40,7 @@ if (category === "clothing") {
       matsUsed.push(clothMats[i]);
     }
   }
-} else {
+} else if (category === "furniture") {
   for (var i=0; i<furnitureMats.length; i++) {
     if (info.innerHTML.includes(furnitureMats[i])) {
       matsUsed.append(clothMats[i]);
