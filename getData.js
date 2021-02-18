@@ -23,7 +23,7 @@ function extractPincode(address) {
 
   for (var i=0; i<address.length-6; i++) {
     if (/^\d+$/.test(address.substring(i, i+6))) {
-      return parseInt(address.substring(i, i+6));
+      return address.substring(i, i+6);
     }
   }
 
