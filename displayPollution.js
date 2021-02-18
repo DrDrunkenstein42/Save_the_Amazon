@@ -138,7 +138,7 @@ var calculateTreeFigure = function (category, weight, material) {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    var category = request["category'];
+    var category = request["category"];
     var weight = request["weight"];
     var origin = request["manufacturer"];
     var material = request["materials"][0]; // might not work - still have to test
