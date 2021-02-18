@@ -27,6 +27,7 @@ function calculateShippingPollution(weight, origin, dest, manufacturer=null) {
     const originLat = countries[origin].latitude;
     const originLng = countries[origin].longitude;
     const water_dist = latLngDistance(originLat, originLng, indiaLat, indiaLng) * waterDistanceConst;
+    carbonShipping = water_dist * 21 * weight * 1e-6;
   }
   return [carbonShipping, waterShipping];
 }
