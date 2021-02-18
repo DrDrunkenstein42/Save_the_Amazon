@@ -28,26 +28,31 @@ function extractPincode(address) {
   return null;
 }
 
-// get product weight and origin
+// get product weight, country of origin. get pincode of  manufacturer if in India
 var weight = 0;
 var origin = "";
+var manufacturer = "";
 
 if (category === "books" || category === "clothing") {
   var details = document.getElementsByClassName("a-unordered-list a-nostyle a-vertical a-spacing-none detail-bullet-list")[0];
   for (var i=0; i<details.children.length; i++) {
     if (details.children[i].children[0].children[0].innerHTML.toLowerCase().includes("weight")) {
-      weight = details.children[i].children[0].children[1].innerHTML;
+      weight = details.children[i].children[0].children[1].innerHTML.toLowerCase();
     } else if (details.children[i].children[0].children[0].innerHTML.toLowerCase().includes("origin")) {
-      origin = details.children[i].children[0].children[1].innerHTML;
+      origin = details.children[i].children[0].children[1].innerHTML.toLowerCase();
+    } else if (details.children[i].children[0].children[0].innerHTML.toLowerCase().includes("manufacturer")) {
+      manufacturer = extractPincode(details.children[i].children[0].children[1].innerHTML.toLowerCase());
     }
   }
 } else {
   var details = document.getElementById("productDetails_techSpec_section_1");
   for (var i=0; i<details.rows.length; i++) {
     if (details.rows[i].cells[0].innerHTML.toLowerCase().includes("weight")) {
-      weight = details.rows[i].cells[1].innerHTML;
+      weight = details.rows[i].cells[1].innerHTML.toLowerCase();
     } else if (details.rows[i].cells[0].innerHTML.toLowerCase().includes("origin")) {
-      origin = details.rows[i].cells[1].innerHTML;
+      origin = details.rows[i].cells[1].innerHTML.toLowerCase();
+    } else if (details.rows[i].cells[0].innerHTML.toLowerCase().includes("manufacturer")) {
+      manufacturer = extractPincode(details.rows[i].cells[1].innerHTML.toLowerCase());
     }
   }
 }
@@ -67,5 +72,6 @@ chrome.runtime.sendMessage({
   "category": category,
   "weight": weight,
   "origin": origin,
+  "manufacturer": manufacturer,
   "address": address
 })

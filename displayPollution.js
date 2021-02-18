@@ -3,16 +3,25 @@ import countries from "./countries"
 
 const WATER_LAMBDA = 1;
 
-function calculatePollution(weight, origin, dest) {
+function calculatePollution(weight, origin, dest, manufacturer=null) {
   const carbonShipping = 0;
   const waterShipping = 0;
 
   const indiaLat = countries["india"].latitude;
   const indiaLng = countries["india"].longitude;
+  const distance = 0;
   if (origin === "india") {
-    const endLat = codes[dest].lat;
-    const endLng = codes[dest].lng;
-    const distance = latLngDistance(indiaLat, indiaLng, endLat, endLng);
+    if (manufacturer === null) { // country of origin is india, but we dont have manufacturer pincode
+      const endLat = codes[dest].lat;
+      const endLng = codes[dest].lng;
+      distance = latLngDistance(indiaLat, indiaLng, endLat, endLng);
+    } else { // we have manufacturer pincode in India
+      const startLat = codes[manufacturer].lat;
+      const startLng = codes[manufacturer].lng;
+      const endLat = codes[dest].lat;
+      const endLng = codes[dest].lng;
+      distance = latLngDistance(startLat, startLng, endLat, endLng);
+    }
   } else {
     const originLat = countries[origin].latitude;
     const originLng = countries[origin].longitude;
