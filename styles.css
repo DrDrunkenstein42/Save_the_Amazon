@@ -1,6 +1,7 @@
 body {
-    height: 300 px;
-    width: 1000 px;
+    height: 1500 px;
+    width: 1500 px;
+    overflow: hidden;
 }
 
 .container {
