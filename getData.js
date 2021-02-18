@@ -16,17 +16,32 @@ if (category === "") {
   }
 }
 
-// get product weight and country of origin
+function extractPincode(address) {
+  if (address.length < 6) {
+    return null;
+  }
+
+  for (var i=0; i<address.length-6; i++) {
+    if (/^\d+$/.test(address.substring(i, i+6))) {
+      return parseInt(address.substring(i, i+6));
+    }
+  }
+
+  return null;
+}
+
+// get product weight and pincode
 var weight = 0;
-var origin = "";
+var pincode = 0;
 
 if (category === "books" || category === "clothing") {
-  var details = document.getElementsByClass("a-unordered-list a-nostyle a-vertical a-spacing-none detail-bullet-list");
+  var details = document.getElementsByClassName("a-unordered-list a-nostyle a-vertical a-spacing-none detail-bullet-list")[0];
   for (var i=0; i<details.children.length; i++) {
     if (details.children[i].children[0].children[0].innerHTML.toLowerCase().includes("weight")) {
       weight = details.children[i].children[0].children[1].innerHTML;
-    } else if (details.children[i].children[0].children[0].innerHTML.toLowerCase().includes("origin")) {
-      origin = details.children[i].children[0].children[1].innerHTML;
+    } else if (details.children[i].children[0].children[0].innerHTML.toLowerCase().includes("manufacturer")) {
+      pincode = details.children[i].children[0].children[1].innerHTML;
+      pincode = extractPincode(pincode);
     }
   }
 } else {
@@ -40,6 +55,10 @@ if (category === "books" || category === "clothing") {
   }
 }
 
+// get shipping pincode (you have to be signed in)
+var address = document.getElementsByClassName("nav-line-2 nav-progressive-content")[0].innerHTML;
+address = extractPincode(address);
+
 //get weight as integer in grams
 if (weight.includes("Kilograms")) {
   weight = parseInt(weight.substring(0, weight.length-10));
@@ -50,5 +69,6 @@ if (weight.includes("Kilograms")) {
 chrome.runtime.sendMessage({
   "category": category,
   "weight": weight,
-  "origin": origin
+  "pincode": pincode,
+  "address": address
 })
