@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
   var bg = chrome.extension.getBackgroundPage();
 
-  document.getElementById("air-value").innerHTML = bg.airPollution.toString() + " kg";
+  document.getElementById("air-value").innerHTML = bg.airPollution.toString() + " g";
   document.getElementById("water-value").innerHTML = bg.waterPollution.toString() + " l";
   /*
   console.log("Water Pollution:")

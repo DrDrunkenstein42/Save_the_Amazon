@@ -76925,7 +76925,7 @@ var waterPollution = calculateWaterPollution(category, weight, origin, matsUsed)
 var treeFigure = calculateTreeFigure(category, weight, matsUsed);
 
 chrome.runtime.sendMessage({
-  "air": Math.round(airPollution/1000),
+  "air": Math.round(airPollution),
   "water": Math.round(waterPollution),
   "treeFigure": Math.round(treeFigure)
 })
