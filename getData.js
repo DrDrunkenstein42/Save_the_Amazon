@@ -32,18 +32,18 @@ function extractPincode(address) {
 const furnitureMats = ["wood", "plastic"];
 const clothMats = ["cotton", "polyester", "leather", "silk", "wool", "denim"];
 
-var matsUsed = [];
+var matsUsed = "";
 var info = document.getElementsByClassName("a-unordered-list a-vertical a-spacing-mini")[0];
 if (category === "clothing") {
   for (var i=0; i<clothMats.length; i++) {
     if (info.innerHTML.includes(clothMats[i])) {
-      matsUsed.push(clothMats[i]);
+      matsUsed+= (clothMats[i] + " ");
     }
   }
 } else if (category === "furniture") {
   for (var i=0; i<furnitureMats.length; i++) {
     if (info.innerHTML.includes(furnitureMats[i])) {
-      matsUsed.append(clothMats[i]);
+      matsUsed+= (furnitureMats[i] + " ");
     }
   }
 }
