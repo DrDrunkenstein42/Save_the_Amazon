@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
         treeValue.setAttributeNode(newClass);
         treeValue.setAttributeNode(newId)
         treeValue.textContent = window.treeFigure;
-        
+
         document.getElementById("tree").append(treeValue);
         /*
         console.log();
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("treeValue").remove();
             document.getElementById("tree").remove();
         }
-        
+
     }
 
 })
