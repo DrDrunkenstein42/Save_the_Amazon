@@ -49,37 +49,54 @@ function latLngDistance(startLat, startLng, endLat, endLng) {
   return c * KM_RATIO;
 }
 
-var calculateAirPollution = function (category, weight, origin, material) {
+const materialAirPollution = { // contains carbon emission (g) per gram of mamterial
+  "wood": 1,
+  "plastic": 5,
+  "cotton": 1,
+  "silk": 1,
+  "denim": 1,
+  "leather": 1,
+  "polyester": 1,
+  "wool": 1
+}
+
+const materialWaterPollution = { // contains carbon emission (g) per gram of mamterial
+  "wood": 1,
+  "plastic": 5,
+  "cotton": 1,
+  "silk": 1,
+  "denim": 1,
+  "leather": 1,
+  "polyester": 1,
+  "wool": 1
+}
+
+var calculateAirPollution = function (category, weight, origin, materials) {
 
     var air = 0; // air pollution in g of GHG and water pollution in l of water contaminated
     if (category === "electronics") {
         if (origin === "China") {
             // Almost same as below with variations according to China's pollution standards (backed by the internet)
-            air = air + (weight * 3.4575);
-            water = 480 + (weight*0.45);
+            air += weight * 3.4575;
 
         } else {
             // ((0.25*3.9) + (0.205*2) + (0.07*0.2) + (0.15*5) + (0.07*3.5))
             // Silicon + Iron&Steel + Copper + Aluminium + Lead
-            air = air + (weight * 2.394);
+            air += weight * 2.394;
         }
-    } else if (category === "clothing") {
-
-        if (material === "cotton") {
-            air = 14;
-        }
-        //other materials
+    } else if (category === "clothing" || category === "furniture") {
+      for (var i=0; i<materials.length; i++) {
+        air += materialAirPollution[materials[i]] * weight / materials.length;
+      }
     } else if (category === "books") {
-
-    } else if (category === "furniture") {
-
+      air += weight * 0.212;
     } else {
-        return "Unavailable"
+        return "Unavailable";
     }
-    return air
+    return air;
 }
 
-var calculateWaterPollution = function (category, weight, origin, material) {
+var calculateWaterPollution = function (category, weight, origin, materials) {
     var water = 0; // water pollution in l of water contaminated
     // Can change water during manufacture if find better src
     if (category === "electronics") {
@@ -93,37 +110,30 @@ var calculateWaterPollution = function (category, weight, origin, material) {
             water = 480 + (weight*0.33);
         }
 
-    } else if (category === "clothing") {
-
-        if (material === "cotton") {
-            weight_kg = weight / 1000
-            var weightCotton = weight_kg * 19;
-            water = water + weight / 70 + weightCotton * 3;
-        }
-        //other materials
+    } else if (category === "clothing" || category === "furniture") {
+      for (var i=0; i<materials.length; i++) {
+        water += materialWaterPollution[materials[i]] * weight / materials.length;
+      }
     } else if (category === "books") {
-        water = water + (weight*0.009)
-
-    } else if (category === "furniture") {
+        water += weight * 0.009;
 
     } else {
         water = "Unavailable"
     }
     return water
-
 }
 
-var calculateTreeFigure = function (category, weight, material) {
+var calculateTreeFigure = function (category, weight, materials) {
     var annualLoss;
 
     if (category === "books") {
         annualLoss = weight * 0.03008;
 
-    } else if (category === "furniture" && material === "wood") {
+    } else if (category === "furniture" && materials.includes("wood")) {
 
-        //500 kg / m^3 density of leaf - 0.00025m avg thickness of leaf - 50kg wood per kg leaves
+        // 500 kg / m^3 density of leaf - 0.00025m avg thickness of leaf - 50kg wood per kg leaves
         // An avg softwood of 5232 pounds absorbs 8-9 tonnes of CO2 in a yr
-        annualLoss = weight * 30.08;
+        annualLoss = weight * 30.08/materials.length;
 
     } else {
       return null;
@@ -135,10 +145,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     var category = request["category"];
     var weight = request["weight"];
     var origin = request["origin"];
-    var material = request["materials"][0]; // might not work - still have to test
-    window.airPollution = calculateAirPollution(category, weight, origin, material) + calculateShippingPollution(weight, origin, request["address"], manufacturer);
-    window.waterPollution = calculateWaterPollution(category, weight, origin, material);
+    var materials = request["materials"][0]; // might not work - still have to test
+    window.airPollution = calculateAirPollution(category, weight, origin, materials) + calculateShippingPollution(weight, origin, request["address"], manufacturer);
+    window.waterPollution = calculateWaterPollution(category, weight, origin, materials);
     if ((category === "furniture" && material === "wood") || category === "books") {
-      window.treeFigure = calculateTreeFigure(category, weight, material); // Need to make corresponding change to display this in popup.js
+      window.treeFigure = calculateTreeFigure(category, weight, materials); // Need to make corresponding change to display this in popup.js
     }
 })
