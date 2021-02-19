@@ -47,9 +47,6 @@ if (category === "clothing") {
     }
   }
 }
-if (materials === "") {
-  materials = null;
-}
 
 // get product weight, country of origin. get pincode of  manufacturer if in India
 var weight = 0;
