@@ -76824,25 +76824,25 @@ function latLngDistance(startLat, startLng, endLat, endLng) {
 console.log([category, weight, origin, matsUsed, manufacturer, address]);
 
 const materialAirPollution = { // contains carbon emission (g) per gram of mamterial
-  "wood": 1,
+  "wood": 0.63,
   "plastic": 5,
-  "cotton": 1,
-  "silk": 1,
-  "denim": 1,
-  "leather": 1,
-  "polyester": 1,
-  "wool": 1
+  "cotton": 1.5,
+  "silk": 0.25,
+  "denim": 15,
+  "leather": 0.69,
+  "polyester": 5.4,
+  "wool": 13
 }
 
 const materialWaterPollution = { // contains carbon emission (g) per gram of mamterial
-  "wood": 1,
+  "wood": 0.1,
   "plastic": 5,
-  "cotton": 1,
-  "silk": 1,
-  "denim": 1,
-  "leather": 1,
-  "polyester": 1,
-  "wool": 1
+  "cotton": 28,
+  "silk": 30,
+  "denim": 29,
+  "leather": 0.16,
+  "polyester": 0, // no water footprint in polyester manufacture
+  "wool": 13
 }
 
 function calculateAirPollution(category, weight, origin, materials) {
