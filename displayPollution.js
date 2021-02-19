@@ -55,7 +55,7 @@ function latLngDistance(startLat, startLng, endLat, endLng) {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    var pollution = calculatePollution(request["category"] ,request["weight"], request["manufacturer"]);
+    var pollution = calculatePollution(request["category"] ,request["weight"], request["origin"]);
     window.airPollution = pollution[0];
     window.waterPollution = pollution[1];
     window.shipping = calculateShipping(request["manufacturer"], request["address"]);
