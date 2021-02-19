@@ -76786,7 +76786,7 @@ function calculateShippingPollution(weight, origin, dest, manufacturer=null) {
       const endLat = codes[dest].lat;
       const endLng = codes[dest].lng;
       distance = latLngDistance(indiaLat, indiaLng, endLat, endLng);
-      carbonShipping = distance * 550; // gramms of carbon emission per kilometer
+      carbonShipping = distance * 550 * weight / 36000; // grams of carbon emission per kilometer
     } else { // we have manufacturer pincode in India
       const startLat = codes[manufacturer].lat;
       const startLng = codes[manufacturer].lng;
