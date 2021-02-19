@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
   var bg = chrome.extension.getBackgroundPage();
 
-  document.getElementById("air").innerHTML = bg.airPollution.toString() + " kg of GreenHouse Gases released";
-  document.getElementById("water").innerHTML = bg.waterPollution.toString() + " litres of water contaminated";
+  document.getElementById("air-value").innerHTML = bg.airPollution.toString() + " kg";
+  document.getElementById("water-value").innerHTML = bg.waterPollution.toString() + " l";
   /*
   console.log("Water Pollution:")
   console.log(bg.waterPollution);
