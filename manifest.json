@@ -2,8 +2,8 @@
 {
   "name": "Save the Amazon",
   "version": "1.0",
-  "description": "Computes the air and water pollution suffered by the environment during the manufacture of a given product, from the procurement of raw materials to shipping to your doorstep.",
-  
+  "description": "Computes the air and water pollution of a given product on amazon during mining/agriculture, manufacturing, and shipping.",
+
   "background": {
     "scripts": ["displayPollution.js"],
     "persistent": false
@@ -24,6 +24,6 @@
   "permissions": [
     "tabs", "http://*/*"
   ],
-  
+
   "manifest_version": 2
 }
