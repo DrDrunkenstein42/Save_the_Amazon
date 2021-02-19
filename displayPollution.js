@@ -5,7 +5,6 @@ const waterDistanceConst = 2;
 
 function calculateShippingPollution(weight, origin, dest, manufacturer=null) {
   const carbonShipping = 0;
-  const waterShipping = 0;
 
   const indiaLat = countries["india"].latitude;
   const indiaLng = countries["india"].longitude;
@@ -29,11 +28,7 @@ function calculateShippingPollution(weight, origin, dest, manufacturer=null) {
     const water_dist = latLngDistance(originLat, originLng, indiaLat, indiaLng) * waterDistanceConst;
     carbonShipping = water_dist * 21 * weight * 1e-6;
   }
-  return [carbonShipping, waterShipping];
-}
-
-function calculatePollution(weight, origin, dest, manufacturer=null) {
-
+  return carbonShipping;
 }
 
 function toRad(x) {
@@ -141,10 +136,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     var weight = request["weight"];
     var origin = request["origin"];
     var material = request["materials"][0]; // might not work - still have to test
-    window.airPollution = calculateAirPollution(category, weight, origin, material);
+    window.airPollution = calculateAirPollution(category, weight, origin, material) + calculateShippingPollution(weight, origin, request["address"], manufacturer);
     window.waterPollution = calculateWaterPollution(category, weight, origin, material);
     if ((category === "furniture" && material === "wood") || category === "books") {
       window.treeFigure = calculateTreeFigure(category, weight, material); // Need to make corresponding change to display this in popup.js
     }
-    window.shipping = calculateShipping(weight, origin, request["address"], manufacturer);
 })
