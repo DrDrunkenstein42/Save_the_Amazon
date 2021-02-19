@@ -1,17 +1,17 @@
 document.addEventListener("DOMContentLoaded", function() {
-  var bg = chrome.extension.getBackgroundPage();
+  chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, "hi", updatePopup)
+  })
+}, false);
 
-  document.getElementById("air-value").innerHTML = bg.airPollution.toString() + " g";
-  document.getElementById("water-value").innerHTML = bg.waterPollution.toString() + " l";
-  /*
-  console.log("Water Pollution:")
-  console.log(bg.waterPollution);
-  console.log("Air Pollution:")
-  console.log(bg.airPollution);
-  */
+function updatePopup (res) {
+  document.getElementById("air-value").innerHTML = res["air"].toString() + " g";
+  document.getElementById("water-value").innerHTML = res["water"].toString() + " l";
+
+  var treeFigure = res["treeFigure"];
 
 
-  if (!(window.treeFigure === 0 || window.treeFigure === undefined)) {
+  if (!(treeFigure === 0 || treeFigure === undefined)) {
 
     var treeDiv = document.createElement("div");
     var className = document.createAttribute("class");
@@ -31,25 +31,16 @@ document.addEventListener("DOMContentLoaded", function() {
     newId.value = "treeValue";
     treeValue.setAttributeNode(newClass);
     treeValue.setAttributeNode(newId)
-    treeValue.textContent = window.treeFigure;
+    treeValue.textContent = treeFigure;
 
-    document.getElementById("tree").append(treeValue);
-    /*
-    console.log();
-    console.log("Tree Figure");
-    console.log(window.treeFigure);
-    */
+
   } else {
     if (!(document.getElementById("treeValue") === null)) {
-      /*
-      console.log();
-      console.log("TreeValue");
-      console.log(document.getElementById("treeValue"));
-      */
+
       document.getElementById("treeValue").remove();
       document.getElementById("tree").remove();
     }
 
   }
 
-})
+}
