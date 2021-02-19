@@ -17,7 +17,7 @@ body {
   display: block;
   margin-top: 20px;
   margin-left: 20px;
-  margin-bottom: 70px;
+  margin-bottom: 90px;
   width: 70%;
 }
 
@@ -33,4 +33,5 @@ body {
   color: white;
   font-size: 17px;
   margin-bottom: 70px;
+  margin-right: 5px;
 }

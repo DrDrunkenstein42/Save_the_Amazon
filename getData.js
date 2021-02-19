@@ -76825,7 +76825,14 @@ function latLngDistance(startLat, startLng, endLat, endLng) {
   return c * KM_RATIO;
 }
 
-console.log([category, weight, origin, matsUsed, manufacturer, address]);
+console.log({
+  "category": category,
+  "weight": weight,
+  "country of origin": origin,
+  "materials used": matsUsed,
+  "manufacturer pincode": manufacturer,
+  "delivery pincode": address
+});
 
 const materialAirPollution = { // contains carbon emission (g) per gram of mamterial
   "wood": 0.63,
@@ -76902,21 +76909,15 @@ function calculateWaterPollution(category, weight, origin, materials) {
 }
 
 function calculateTreeFigure(category, weight, materials) {
-    var annualLoss;
-
-    if (category === "books") {
-        annualLoss = weight * 0.03008;
-
-    } else if (category === "furniture" && materials.includes("wood")) {
-
-        // 500 kg / m^3 density of leaf - 0.00025m avg thickness of leaf - 50kg wood per kg leaves
-        // An avg softwood of 5232 pounds absorbs 8-9 tonnes of CO2 in a yr
-        annualLoss = weight * 30.08/materials.length;
-
-    } else {
-      return 0;
-    }
-    return annualLoss
+  var annualLoss = 0;
+  if (category === "books") {
+      annualLoss = weight * 0.03008;
+  } else if (category === "furniture" && materials.includes("wood")) {
+      // 500 kg / m^3 density of leaf - 0.00025m avg thickness of leaf - 50kg wood per kg leaves
+      // An avg softwood of 5232 pounds absorbs 8-9 tonnes of CO2 in a yr
+      annualLoss = weight * 30.08/materials.length;
+  }
+  return annualLoss
 }
 
 var airPollution = calculateAirPollution(category, weight, origin, matsUsed)
