@@ -76769,7 +76769,7 @@ address = extractPincode(address);
 
 //get weight as integer in grams
 if (weight.includes("Kilograms")) {
-  weight = parseInt(weight.substring(0, weight.length-10));
+  weight = parseInt(weight.substring(0, weight.length-10)) * 1000;
 } else {
   weight = parseInt(weight.substring(0, weight.length-2));
 }
@@ -76820,6 +76820,8 @@ function latLngDistance(startLat, startLng, endLat, endLng) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return c * KM_RATIO;
 }
+
+console.log([category, weight, origin, matsUsed, manufacturer, address]);
 
 const materialAirPollution = { // contains carbon emission (g) per gram of mamterial
   "wood": 1,
