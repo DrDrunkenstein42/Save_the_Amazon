@@ -36,16 +36,19 @@ var matsUsed = "";
 var info = document.getElementsByClassName("a-unordered-list a-vertical a-spacing-mini")[0];
 if (category === "clothing") {
   for (var i=0; i<clothMats.length; i++) {
-    if (info.innerHTML.includes(clothMats[i])) {
+    if (info.innerHTML.toLowerCase().includes(clothMats[i])) {
       matsUsed+= (clothMats[i] + " ");
     }
   }
 } else if (category === "furniture") {
   for (var i=0; i<furnitureMats.length; i++) {
-    if (info.innerHTML.includes(furnitureMats[i])) {
+    if (info.innerHTML.toLowerCase().includes(furnitureMats[i])) {
       matsUsed+= (furnitureMats[i] + " ");
     }
   }
+}
+if (materials === "") {
+  materials = null;
 }
 
 // get product weight, country of origin. get pincode of  manufacturer if in India
