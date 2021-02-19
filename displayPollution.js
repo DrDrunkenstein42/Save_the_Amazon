@@ -142,13 +142,13 @@ var calculateTreeFigure = function (category, weight, materials) {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    var category = request["category"];
-    var weight = request["weight"];
-    var origin = request["origin"];
-    var materials = request["materials"]; // might not work - still have to test
-    window.airPollution = calculateAirPollution(category, weight, origin, materials) + calculateShippingPollution(weight, origin, request["address"], manufacturer);
-    window.waterPollution = calculateWaterPollution(category, weight, origin, materials);
-    if ((category === "furniture" && material === "wood") || category === "books") {
-      window.treeFigure = calculateTreeFigure(category, weight, materials); // Need to make corresponding change to display this in popup.js
-    }
+  var category = request["category"];
+  var weight = request["weight"];
+  var origin = request["origin"];
+  var materials = request["materials"]; // might not work - still have to test
+  window.airPollution = calculateAirPollution(category, weight, origin, materials) + calculateShippingPollution(weight, origin, request["address"], manufacturer);
+  window.waterPollution = calculateWaterPollution(category, weight, origin, materials);
+  if ((category === "furniture" && material === "wood") || category === "books") {
+    window.treeFigure = calculateTreeFigure(category, weight, materials); // Need to make corresponding change to display this in popup.js
+  }
 })
