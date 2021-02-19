@@ -76780,6 +76780,8 @@ function calculateShippingPollution(weight, origin, dest, manufacturer=null) {
 
   const indiaLat = countries["India"].latitude;
   const indiaLng = countries["India"].longitude;
+  const mumbaiLat = 19.076;
+  const mumbaiLng = 72.877;
   var distance = 0; // in km
   if (origin === "India") {
     if (manufacturer === null) { // country of origin is india, but we dont have manufacturer pincode
@@ -76793,12 +76795,14 @@ function calculateShippingPollution(weight, origin, dest, manufacturer=null) {
       const endLat = codes[dest].lat;
       const endLng = codes[dest].lng;
       distance = latLngDistance(startLat, startLng, endLat, endLng);
+      carbonShipping = distance * 550 * weight / 36000;
     }
   } else {
     const originLat = countries[origin].latitude;
     const originLng = countries[origin].longitude;
-    const water_dist = latLngDistance(originLat, originLng, indiaLat, indiaLng) * waterDistanceConst;
-    carbonShipping = water_dist * 21 * weight * 1e-6;
+    const water_dist = latLngDistance(originLat, originLng, mumbaiLat, mumbaiLng) * waterDistanceConst;
+    const roadDist = latLngDistance(mumbaiLat, mumbaiLng, codes[dest].lat, codes[dest].lng);
+    carbonShipping = (water_dist * 21 * weight * 1e-6) + (roadDist * 550 * weight / 36000);
   }
   return carbonShipping;
 }
