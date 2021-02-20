@@ -76770,6 +76770,9 @@ if (category === "books" || category === "clothing") {
     }
   }
 }
+if (origin === "") {
+  origin = "India";
+}
 
 // get shipping pincode (you have to be signed in)
 var address = document.getElementsByClassName("nav-line-2 nav-progressive-content")[0].innerHTML;
