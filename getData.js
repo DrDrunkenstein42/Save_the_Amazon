@@ -76796,21 +76796,22 @@ function calculateShippingPollution(weight, origin, dest, manufacturer=null) {
       const endLat = codes[dest].lat;
       const endLng = codes[dest].lng;
       distance = latLngDistance(indiaLat, indiaLng, endLat, endLng);
-      carbonShipping = distance * weight * 101  * 1e-6; // grams of carbon emission per kilometer
+      // truck capacity: 2.5 tonnes. truck mileage: 4 km/l. ghg per litre: 2.62kg
+      carbonShipping = distance * weight * 262  * 1e-6; // grams of carbon emission per kilometer
     } else { // we have manufacturer pincode in India
       const startLat = codes[manufacturer].lat;
       const startLng = codes[manufacturer].lng;
       const endLat = codes[dest].lat;
       const endLng = codes[dest].lng;
       distance = latLngDistance(startLat, startLng, endLat, endLng);
-      carbonShipping = distance * weight * 101  * 1e-6;
+      carbonShipping = distance * weight * 262  * 1e-6;
     }
   } else {
     const originLat = countries[origin].latitude;
     const originLng = countries[origin].longitude;
     const water_dist = latLngDistance(originLat, originLng, mumbaiLat, mumbaiLng) * waterDistanceConst;
     const roadDist = latLngDistance(mumbaiLat, mumbaiLng, codes[dest].lat, codes[dest].lng);
-    carbonShipping = (water_dist * 21 * weight * 1e-6) + (roadDist * weight * 101  * 1e-6);
+    carbonShipping = (water_dist * 21 * weight * 1e-6) + (roadDist * weight * 262  * 1e-6);
   }
   return carbonShipping;
 }
@@ -76932,6 +76933,13 @@ var airPollution = calculateAirPollution(category, weight, origin, matsUsed)
   + calculateShippingPollution(weight, origin, address, manufacturer);
 var waterPollution = calculateWaterPollution(category, weight, origin, matsUsed);
 var treeFigure = calculateTreeFigure(category, weight, matsUsed);
+
+console.log({
+  "air": airPollution,
+  "shipping": shippingPollution,
+  "water": waterPollution,
+  "tree": treeFigure
+});
 
 chrome.runtime.sendMessage({
   "air": Math.round(airPollution),
