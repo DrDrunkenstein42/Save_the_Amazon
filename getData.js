@@ -76726,10 +76726,31 @@ if (category === "clothing") {
       matsUsed.push(clothMats[i]);
     }
   }
+  if (!(matsUsed.includes("denim"))) {
+    if (info.innerHTML.toLowerCase().includes("jeans")) {
+      matsUsed.push("denim");
+    }
+  }
 } else if (category === "furniture") {
   for (var i=0; i<furnitureMats.length; i++) {
     if (info.innerHTML.toLowerCase().includes(furnitureMats[i])) {
       matsUsed.push(furnitureMats[i]);
+    }
+  }
+}
+info = document.getElementsByClassName("a-unordered-list a-nostyle a-vertical a-spacing-none detail-bullet-list")[0];
+if (category === "clothing") {
+  for (var i=0; i<clothMats.length; i++) {
+    if (
+      info.innerHTML.toLowerCase().includes(clothMats[i]) &&
+      !(matsUsed.includes(clothMats[i]))
+    ) {
+      matsUsed.push(clothMats[i]);
+    }
+  }
+  if (!(matsUsed.includes("denim"))) {
+    if (info.innerHTML.toLowerCase().includes("jeans")) {
+      matsUsed.push("denim");
     }
   }
 }
