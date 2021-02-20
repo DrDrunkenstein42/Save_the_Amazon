@@ -76800,7 +76800,7 @@ var address = document.getElementsByClassName("nav-line-2 nav-progressive-conten
 address = extractPincode(address);
 
 //get weight as integer in grams
-if (weight.includes("Kilograms")) {
+if (weight.includes("kilograms")) {
   weight = parseInt(weight.substring(0, weight.length-10)) * 1000;
 } else {
   weight = parseInt(weight.substring(0, weight.length-2));
