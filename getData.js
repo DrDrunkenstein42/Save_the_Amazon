@@ -76704,14 +76704,14 @@ if (category === "") {
 
 function extractPincode(address) {
   if (address.length < 6) {
-    return null;
+    return "";
   }
   for (var i=0; i<address.length-6; i++) {
     if (/^\d+$/.test(address.substring(i, i+6))) {
       return address.substring(i, i+6);
     }
   }
-  return null;
+  return "";
 }
 
 // get product materials in case of furniture or clothing
@@ -76761,6 +76761,14 @@ if (category === "books" || category === "clothing") {
       manufacturer = extractPincode(details.rows[i].cells[1].innerHTML.toLowerCase());
     }
   }
+  if  (manufacturer === "") {
+    details = document.getElementById("productDetails_detailBullets_sections1");
+    for (var i=0; i<details.rows.length; i++) {
+      if (details.rows[i].cells[0].innerHTML.toLowerCase().includes("manufacturer")) {
+        manufacturer = extractPincode(details.rows[i].cells[1].innerHTML.toLowerCase());
+      }
+    }
+  }
 }
 
 // get shipping pincode (you have to be signed in)
@@ -76784,25 +76792,25 @@ function calculateShippingPollution(weight, origin, dest, manufacturer=null) {
   const mumbaiLng = 72.877;
   var distance = 0; // in km
   if (origin === "India") {
-    if (manufacturer === null) { // country of origin is india, but we dont have manufacturer pincode
+    if (manufacturer === "") { // country of origin is india, but we dont have manufacturer pincode
       const endLat = codes[dest].lat;
       const endLng = codes[dest].lng;
       distance = latLngDistance(indiaLat, indiaLng, endLat, endLng);
-      carbonShipping = distance * 550 * weight / 36000; // grams of carbon emission per kilometer
+      carbonShipping = distance * weight * 101  * 1e-6; // grams of carbon emission per kilometer
     } else { // we have manufacturer pincode in India
       const startLat = codes[manufacturer].lat;
       const startLng = codes[manufacturer].lng;
       const endLat = codes[dest].lat;
       const endLng = codes[dest].lng;
       distance = latLngDistance(startLat, startLng, endLat, endLng);
-      carbonShipping = distance * 550 * weight / 36000;
+      carbonShipping = distance * weight * 101  * 1e-6;
     }
   } else {
     const originLat = countries[origin].latitude;
     const originLng = countries[origin].longitude;
     const water_dist = latLngDistance(originLat, originLng, mumbaiLat, mumbaiLng) * waterDistanceConst;
     const roadDist = latLngDistance(mumbaiLat, mumbaiLng, codes[dest].lat, codes[dest].lng);
-    carbonShipping = (water_dist * 21 * weight * 1e-6) + (roadDist * 550 * weight / 36000);
+    carbonShipping = (water_dist * 21 * weight * 1e-6) + (roadDist * weight * 101  * 1e-6);
   }
   return carbonShipping;
 }
