@@ -22,7 +22,7 @@
   },
 
   "permissions": [
-    "tabs", "http://*/*"
+    "http://*/*"
   ],
 
   "icons": {
