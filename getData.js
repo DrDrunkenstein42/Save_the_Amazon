@@ -76936,7 +76936,6 @@ var treeFigure = calculateTreeFigure(category, weight, matsUsed);
 
 console.log({
   "air": airPollution,
-  "shipping": shippingPollution,
   "water": waterPollution,
   "tree": treeFigure
 });
