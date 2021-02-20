@@ -1,5 +1,5 @@
 ## Inspiration
-We realised how adverse the environmental effects of our purchases on e-commerce sites are, and decided to spread awareness about this issue. Amazon Ninja is **browser extension for Google Chrome** that estimates the environmental impact of products on Amazon.
+We realised how adverse the environmental effects of our purchases on e-commerce sites are, and decided to spread awareness about this issue. Eco-meter is **browser extension for Google Chrome** that estimates the environmental impact of products on Amazon.
 
 ## What it does
 The chrome extension conducts its activities in 3 phases. 
@@ -20,5 +20,5 @@ Apart from this being the **first web extension we have developed**, it gives us
 ## What we learned
 On the technical side, we learnt _how to build a web extension_ using various open source developer tools provided by Google Chrome. Another major takeaway from this project was **becoming aware ourselves** of how our daily purchases affect the environment negatively, and what we can do to curb it.
 
-## What's next for Amazon Ninja
+## What's next for Eco-meter
 After launching this extension on the Chrome web store, we look to **expand the number of product categories** our extension works on, and eventually develop it into a _consumer platform_, which will in turn raise awareness. In due course, we can also use the platform to pressure industries to publish detailed data about their carbon emissions, discharges into water bodies and other unsustainable manufacturing practices.
