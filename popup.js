@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", function() {
     airPollution = (airPollution/1000).toFixed(1) + " kg";
   } else { airPollution = airPollution.toString() + " g"; }
   if (waterPollution > 1000) {
-    waterPollution = (waterPollution/1000).toFixed(1) + " kg";
-  } else { waterPollution = waterPollution.toString() + " g"; }
+    waterPollution = (waterPollution/1000).toFixed(1) + " kl";
+  } else { waterPollution = waterPollution.toString() + " l"; }
   if (treeFigure > 1000) {
     treeFigure = (treeFigure/1000).toFixed(1) + " kg";
   } else { treeFigure = treeFigure.toString() + " g"; }
