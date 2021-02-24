@@ -1,3 +1,6 @@
+## Hackathon
+We coded this as part of the TISB Hackathon 2021. This project tied for **first** place.
+
 ## Inspiration
 We realised how adverse the environmental effects of our purchases on e-commerce sites are, and decided to spread awareness about this issue. Eco-meter is **browser extension for Google Chrome** that estimates the environmental impact of products on Amazon.
 
